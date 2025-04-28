@@ -3,10 +3,12 @@
 SavingsAccount::SavingsAccount(double initialBalance, double rate)
     : Account(initialBalance)
 {
-    interestRate = rate;
+    interestRate = (rate >= 0.0) ? rate : 0.0;
 }
 
-double SavingsAccount::calculateInterest() const
+double SavingsAccount::calculateInterest()
 {
-    return getBalance() * interestRate;
+    double interest = balance * interestRate;
+    credit(interest);
+    return interest;
 }

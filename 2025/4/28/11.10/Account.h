@@ -3,13 +3,14 @@
 
 class Account
 {
-private:
+protected:
     double balance;
 
 public:
     Account(double initialBalance);
-    void credit(double amount);
-    bool debit(double amount);
+    virtual ~Account() = default;
+    virtual void credit(double);
+    virtual bool debit(double);
     double getBalance() const;
 };
 

@@ -4,10 +4,9 @@
 CheckingAccount::CheckingAccount(const std::string &number, double initialBalance, double fee)
     : Account(number, initialBalance)
 {
-    // Validate transaction fee
     if (fee < 0.0)
     {
-        std::cout << "Error: Transaction fee cannot be negative. Setting fee to 0." << std::endl;
+        std::cout << "Error: Transaction fee cannot be negative. Setting to 0.\n";
         transactionFee = 0.0;
     }
     else
@@ -18,48 +17,47 @@ CheckingAccount::CheckingAccount(const std::string &number, double initialBalanc
 
 void CheckingAccount::credit(double amount)
 {
-    if (amount > 0.0)
+    if (amount <= 0.0)
     {
-        // First add the amount
-        Account::credit(amount);
+        std::cout << "Error: Credit amount must be positive.\n";
+        return;
+    }
 
-        // Then charge the transaction fee
-        if (getBalance() >= transactionFee)
-        {
-            Account::debit(transactionFee);
-            std::cout << "$" << transactionFee << " transaction fee charged." << std::endl;
-        }
-        else
-        {
-            std::cout << "Unable to charge transaction fee. Insufficient funds." << std::endl;
-        }
+    Account::credit(amount);
+
+    // Charge transaction fee
+    if (balance >= transactionFee)
+    {
+        balance -= transactionFee;
+        std::cout << "$" << transactionFee << " transaction fee charged.\n";
     }
     else
     {
-        std::cout << "Error: Credit amount must be positive." << std::endl;
+        std::cout << "Warning: Unable to charge transaction fee due to insufficient funds.\n";
     }
 }
 
 bool CheckingAccount::debit(double amount)
 {
-    // Calculate total withdrawal amount including fee
-    double totalDebit = amount + transactionFee;
-
-    if (totalDebit > getBalance())
+    if (amount <= 0.0)
     {
-        std::cout << "Debit amount plus transaction fee exceeded account balance." << std::endl;
+        std::cout << "Error: Debit amount must be positive.\n";
         return false;
     }
 
-    // Perform the debit operation
-    bool success = Account::debit(amount);
-
-    if (success)
+    // Check if there's enough to cover both amount and fee
+    if (amount + transactionFee > balance)
     {
-        // Charge the transaction fee
-        Account::debit(transactionFee);
-        std::cout << "$" << transactionFee << " transaction fee charged." << std::endl;
+        std::cout << "Error: Debit amount plus transaction fee exceeds balance.\n";
+        return false;
     }
 
-    return success;
+    // Withdraw the amount
+    balance -= amount;
+
+    // Charge transaction fee
+    balance -= transactionFee;
+    std::cout << "$" << transactionFee << " transaction fee charged.\n";
+
+    return true;
 }

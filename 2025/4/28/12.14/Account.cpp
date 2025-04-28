@@ -4,16 +4,20 @@
 Account::Account(const std::string &number, double initialBalance)
     : accountNumber(number)
 {
-    // Validate initial balance
     if (initialBalance < 0.0)
     {
-        std::cout << "Error: Initial balance cannot be negative. Setting balance to 0." << std::endl;
+        std::cout << "Error: Initial balance cannot be negative. Setting to 0.\n";
         balance = 0.0;
     }
     else
     {
         balance = initialBalance;
     }
+}
+
+std::string Account::getAccountNumber() const
+{
+    return accountNumber;
 }
 
 double Account::getBalance() const
@@ -29,7 +33,7 @@ void Account::credit(double amount)
     }
     else
     {
-        std::cout << "Error: Credit amount must be positive." << std::endl;
+        std::cout << "Error: Credit amount must be positive.\n";
     }
 }
 
@@ -37,21 +41,16 @@ bool Account::debit(double amount)
 {
     if (amount <= 0.0)
     {
-        std::cout << "Error: Debit amount must be positive." << std::endl;
+        std::cout << "Error: Debit amount must be positive.\n";
         return false;
     }
 
     if (amount > balance)
     {
-        std::cout << "Debit amount exceeded account balance." << std::endl;
+        std::cout << "Error: Debit amount exceeds balance.\n";
         return false;
     }
 
     balance -= amount;
     return true;
-}
-
-std::string Account::getAccountNumber() const
-{
-    return accountNumber;
 }

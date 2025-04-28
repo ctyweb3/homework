@@ -27,26 +27,28 @@ void printMailingLabel(const Package &package)
 
 int main()
 {
-    // Create vector of Package pointers to hold various types of packages
+    // Create addresses
+    Address sender1 = {"John Smith", "123 Main St", "Anytown", "NY", "12345"};
+    Address recipient1 = {"Jane Doe", "456 Oak Ave", "Othertown", "CA", "67890"};
+
+    Address sender2 = {"Alice Johnson", "789 Pine Rd", "Smallville", "TX", "23456"};
+    Address recipient2 = {"Bob Williams", "321 Elm St", "Bigcity", "IL", "78901"};
+
+    Address sender3 = {"Mary Wilson", "555 Cedar Dr", "Midtown", "FL", "34567"};
+    Address recipient3 = {"Tom Davis", "888 Maple Ave", "Downtown", "WA", "45678"};
+
+    // Create a vector of Package pointers
     vector<Package *> packages;
 
     // Add packages to the vector
-    packages.push_back(new Package("John Smith", "123 Main St", "Anytown", "NY", "12345",
-                                   "Jane Doe", "456 Oak Ave", "Othertown", "CA", "67890",
-                                   10.5, 0.5)); // 10.5 oz at $0.50 per oz
+    packages.push_back(new Package(sender1, recipient1, 10.5, 0.5));
+    packages.push_back(new TwoDayPackage(sender2, recipient2, 8.25, 0.65, 5.0));
+    packages.push_back(new OvernightPackage(sender3, recipient3, 12.75, 0.45, 0.25));
 
-    packages.push_back(new TwoDayPackage("Alice Johnson", "789 Pine Rd", "Smallville", "TX", "23456",
-                                         "Bob Williams", "321 Elm St", "Bigcity", "IL", "78901",
-                                         8.25, 0.65, 5.0)); // 8.25 oz at $0.65 per oz plus $5.00 flat fee
-
-    packages.push_back(new OvernightPackage("Mary Wilson", "555 Cedar Dr", "Midtown", "FL", "34567",
-                                            "Tom Davis", "888 Maple Ave", "Downtown", "WA", "45678",
-                                            12.75, 0.45, 0.25)); // 12.75 oz at $0.45 per oz plus $0.25 additional per oz
-
-    double totalShippingCost = 0.0; // To track total shipping cost for all packages
+    double totalShippingCost = 0.0;
 
     // Process each package polymorphically
-    cout << fixed << setprecision(2); // Set output formatting for costs
+    cout << fixed << setprecision(2);
 
     for (size_t i = 0; i < packages.size(); ++i)
     {

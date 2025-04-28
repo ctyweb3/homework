@@ -1,25 +1,24 @@
 #include "CheckingAccount.h"
 #include <iostream>
 
-CheckingAccount::CheckingAccount(double initialBalance, double feeAmount)
+CheckingAccount::CheckingAccount(double initialBalance, double f)
     : Account(initialBalance)
 {
-    fee = feeAmount;
+    fee = (f >= 0.0) ? f : 0.0;
 }
 
 void CheckingAccount::credit(double amount)
 {
-    Account::credit(amount - fee);
+    Account::credit(amount);
+    Account::debit(fee);
 }
 
 bool CheckingAccount::debit(double amount)
 {
-    bool success = Account::debit(amount);
-
-    if (success)
+    if (Account::debit(amount))
     {
         Account::debit(fee);
+        return true;
     }
-
-    return success;
+    return false;
 }

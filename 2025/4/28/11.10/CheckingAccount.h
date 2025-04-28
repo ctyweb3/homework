@@ -1,5 +1,5 @@
-#ifndef CHECKING_ACCOUNT_H
-#define CHECKING_ACCOUNT_H
+#ifndef CHECKINGACCOUNT_H
+#define CHECKINGACCOUNT_H
 
 #include "Account.h"
 
@@ -9,9 +9,9 @@ private:
     double fee;
 
 public:
-    CheckingAccount(double initialBalance, double feeAmount);
-    void credit(double amount);
-    bool debit(double amount);
+    CheckingAccount(double initialBalance, double fee);
+    void credit(double) override;
+    bool debit(double) override;
 };
 
-#endif // CHECKING_ACCOUNT_H
+#endif // CHECKINGACCOUNT_H

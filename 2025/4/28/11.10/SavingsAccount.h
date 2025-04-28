@@ -1,5 +1,5 @@
-#ifndef SAVINGS_ACCOUNT_H
-#define SAVINGS_ACCOUNT_H
+#ifndef SAVINGSACCOUNT_H
+#define SAVINGSACCOUNT_H
 
 #include "Account.h"
 
@@ -10,7 +10,7 @@ private:
 
 public:
     SavingsAccount(double initialBalance, double rate);
-    double calculateInterest() const;
+    double calculateInterest();
 };
 
-#endif // SAVINGS_ACCOUNT_H
+#endif // SAVINGSACCOUNT_H

@@ -5,7 +5,7 @@
 
 class Account
 {
-private:
+protected:
     std::string accountNumber;
     double balance;
 
@@ -19,14 +19,14 @@ public:
     // Getter for account balance
     double getBalance() const;
 
+    // Get account number
+    std::string getAccountNumber() const;
+
     // Deposit money into account
     virtual void credit(double amount);
 
     // Withdraw money from account
     virtual bool debit(double amount);
-
-    // Get account number
-    std::string getAccountNumber() const;
 };
 
 #endif // ACCOUNT_H
